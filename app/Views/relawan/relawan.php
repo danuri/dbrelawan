@@ -1,0 +1,180 @@
+<?= $this->extend('template') ?>
+
+<?= $this->section('style') ?>
+
+<?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
+
+<div class="row pb-1">
+  <div class="col-12">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+          <h3 class="ff-secondary fw-semibold text-capitalize lh-base">Data <span class="text-danger">RT</span></h3>
+          <div class="page-title-right">
+              <a href="<?= site_url('relawan/kelurahan/'.$idrt)?>" class="btn btn-sm btn-danger"><i class="ri-arrow-left-line"></i> Kembali</a>
+              <a href="javascript:;" class="btn btn-sm btn-primary" onclick="addRelawan('<?= $idwilayah?>')"><i class="ri-add-circle-line"></i> Tambah Relawan</a>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+        <table class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+        <thead class="table-light text-center">
+          <tr>
+            <th>NIK</th>
+            <th>NKK</th>
+            <th>Nama</th>
+            <th>Jenis Kelamin</th>
+            <th>No. HP</th>
+            <th>Alamat</th>
+            <th>#</th>
+          </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($relawan as $row) {?>
+                    <tr>
+                        <td><?= $row->nik?></td>
+                        <td><?= $row->nkk?></td>
+                        <td><?= $row->nama?></td>
+                        <td><?= $row->jenis_kelamin?></td>
+                        <td><?= $row->no_hp?></td>
+                        <td><?= $row->alamat?></td>
+                        <td></td>
+                    </tr>
+                <?php }?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="addmodal" class="modal fade" data-bs-backdrop="static" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-scroll="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Tambah Pemilih</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="" action="<?= site_url('relawan/add')?>" method="post" id="addform">
+                <div class="row mb-3">
+                    <div class="col-lg-3">
+                        <label for="nik" class="form-label">NIK</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="input-group">
+                            <input type="text" class="form-control" aria-label="NIK" aria-describedby="button-addon2" name="nik" id="nik">
+                            <button class="btn btn-outline-success" type="button" id="button-addon2" onclick="searchnik()">Cari</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="nkk" class="col-sm-3 col-form-label">No KK</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="nkk" id="nkk" readonly>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="nama" class="col-sm-3 col-form-label">Nama</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="nama" id="nama" readonly>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="nama" class="col-sm-3 col-form-label">Kecamatan</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="kecamatan" id="kecamatan" readonly>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="nama" class="col-sm-3 col-form-label">Kelurahan</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="kelurahan" id="kelurahan" readonly>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="nama" class="col-sm-3 col-form-label">RT/RW</label>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" name="rt" placeholder="RT">
+                  </div>
+                  <div class="col-sm-5">
+                    <input type="text" class="form-control" name="rw" placeholder="RW">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="nama" class="col-sm-3 col-form-label">No. HP</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="no_hp" value="">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="jenis_kelamin" class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                  <div class="col-sm-9">
+                  <select class="form-select" name="jenis_kelamin" id="jenis_kelamin">
+                      <option value="Laki-Laki">Laki-Laki</option>
+                      <option value="Perempuan">Perempuan</option>
+                    </select>
+                    <input type="hidden" name="jenis" value="relawan">
+                    <input type="hidden" name="wilayah" id="wilayah">
+                    <input type="hidden" name="tps_id" id="tps_id">
+                    <input type="hidden" name="tps" id="tps">
+                    <input type="hidden" name="alamat" id="alamat">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-primary waves-effect waves-light" onclick="$('#addform').submit()">Kirim</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?= $this->endSection() ?>
+<?= $this->section('script') ?>
+<script src="<?= base_url()?>assets/js/jquery.form.js"></script>
+<script>
+$(document).ready(function() {
+    $('.select2').select2({
+            dropdownParent: $('#addmodal')
+    });
+});
+
+function searchnik() {
+  axios.get('<?= site_url() ?>ajax/searchnik/'+$('#nik').val())
+  .then(function (response) {
+    // handle success
+    $('#nkk').val(response.data.nkk);
+    $('#nama').val(response.data.nama);
+    $('#kecamatan').val(response.data.kecamatan);
+    $('#kelurahan').val(response.data.kelurahan);
+    $('#jenis_kelamin').val(response.data.jenis_kelamin);
+    $('#tps_id').val(response.data.tps_id);
+    $('#tps').val(response.data.tps);
+    $('#alamat').val(response.data.alamat);
+  })
+  .catch(function (error) {
+    alert('Data tidak ditemukan');
+  })
+  .finally(function () {
+    // always executed
+  });
+}
+
+function addRelawan(id)
+{
+    // Clear Form
+    $('#wilayah').val(id);
+    $('#addmodal').modal('show');
+}
+</script>
+<?= $this->endSection() ?>
