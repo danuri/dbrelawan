@@ -15,6 +15,7 @@ $routes->get('auth', 'Auth::index');
 
  $routes->group("ajax", ["filter" => "auth"], function ($routes) {
     $routes->get('searchnik/(:any)', 'Ajax::searchnik/$1');
+    $routes->get('getrelawan/(:any)', 'Ajax::detailRelawan/$1');
  });
 
  $routes->group("relawan", ["filter" => "auth"], function ($routes) {

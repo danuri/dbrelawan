@@ -50,7 +50,7 @@ class RelawanModel extends Model
                                     	a.nama_wilayah,
                                     	a.jumlah_target,
                                     	(SELECT COUNT(id) FROM relawan WHERE id_wilayah LIKE CONCAT(a.id_wilayah,'%')) AS jumlah,
-                                    	b.nama, b.no_hp
+                                    	b.id, b.nama, b.no_hp
                                     FROM
                                     	wilayah a
                                     	LEFT JOIN

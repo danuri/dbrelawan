@@ -96,7 +96,7 @@
                         <td><a href="<?= site_url('relawan/kecamatan/'.$row->id_wilayah)?>"><?= $row->nama_wilayah?></a></td>
                         <td>
                           <?php if($row->nama){ ?>
-                            <?= $row->nama?>
+                            <a href="javascript:;" onclick="detail(<?= $row->id?>)"><?= $row->nama?></a>
                           <?php }else{ ?>
                             <button type="button" class="btn btn-sm btn-outline-success" alt="Klik untuk menambah Korcam" onclick="addKorcam('<?= $row->id_wilayah?>')"><i class="ri-user-add-line align-middle"></i></button>
                           <?php } ?>
@@ -202,6 +202,23 @@
     </div>
 </div>
 
+<div id="detail" class="modal fade" data-bs-backdrop="static" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-scroll="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Detail Relawan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="detailRelawan">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?= $this->endSection() ?>
 <?= $this->section('script') ?>
 <script src="<?= base_url()?>assets/js/jquery.form.js"></script>
@@ -238,6 +255,11 @@ function addKorcam(id)
     // Clear Form
     $('#wilayah').val(id);
     $('#addmodal').modal('show');
+}
+
+function detail(id) {
+  $('#detailRelawan').load('<?= site_url('ajax/getrelawan')?>/'+id);
+  $('#detail').modal('show');
 }
 </script>
 <?= $this->endSection() ?>

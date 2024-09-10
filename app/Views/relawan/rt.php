@@ -46,7 +46,7 @@
                         <td><a href="<?= site_url('relawan/rt/'.$row->id_wilayah)?>"><?= $row->nama_wilayah?></a></td>
                         <td>
                           <?php if($row->nama){ ?>
-                            <?= $row->nama?>
+                            <a href="javascript:;" onclick="detail(<?= $row->id?>)"><?= $row->nama?></a>
                           <?php }else{ ?>
                             <button type="button" class="btn btn-sm btn-outline-success" alt="Klik untuk menambah Korkel" onclick="addKorkel('<?= $row->id_wilayah?>')"><i class="ri-user-add-line align-middle"></i></button>
                           <?php } ?>
@@ -190,6 +190,11 @@ function addKorkel(id)
     // Clear Form
     $('#wilayah').val(id);
     $('#addmodal').modal('show');
+}
+
+function detail(id) {
+  $('#detailRelawan').load('<?= site_url('ajax/getrelawan')?>/'+id);
+  $('#detail').modal('show');
 }
 </script>
 <?= $this->endSection() ?>
