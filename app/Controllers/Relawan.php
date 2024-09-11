@@ -62,6 +62,30 @@ class Relawan extends BaseController
         return redirect()->back()->with('message', 'Data telah ditambahkan');
     }
 
+    public function update()
+    {
+        $model = new RelawanModel();
+        $param = [
+            'jenis_kelamin' => $this->request->getVar('jenis_kelamin'),
+            'no_hp'         => $this->request->getVar('no_hp'),
+            'alamat'         => $this->request->getVar('alamat'),
+            'rw'         => $this->request->getVar('rw'),
+            'rt'         => $this->request->getVar('rt'),
+        ];
+
+        $insert = $model->update($this->request->getVar('idrelawan'),$param);
+
+        return redirect()->back()->with('message', 'Data telah diupdate');
+    }
+
+    public function delete($id)
+    {
+      $model = new RelawanModel();
+      $insert = $model->delete($id);
+
+      return redirect()->back()->with('message', 'Data telah dihapus');
+    }
+
     public function wilayah()
     {
         // isinya kecamatan

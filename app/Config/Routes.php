@@ -15,6 +15,7 @@ $routes->get('auth', 'Auth::index');
 
  $routes->group("ajax", ["filter" => "auth"], function ($routes) {
     $routes->get('searchnik/(:any)', 'Ajax::searchnik/$1');
+    $routes->get('searchrelawan/(:any)', 'Ajax::searchrelawan/$1');
     $routes->get('getrelawan/(:any)', 'Ajax::detailRelawan/$1');
  });
 
@@ -22,6 +23,8 @@ $routes->get('auth', 'Auth::index');
     $routes->get('/', 'Relawan::index');
     $routes->post('getdata', 'Relawan::getdata');
     $routes->post('add', 'Relawan::add');
+    $routes->post('edit', 'Relawan::update');
+    $routes->get('delete/(:any)', 'Relawan::delete/$1');
     $routes->get('wilayah', 'Relawan::wilayah');
     $routes->get('kecamatan/(:any)', 'Relawan::kecamatan/$1');
     $routes->get('kelurahan/(:any)', 'Relawan::kelurahan/$1');

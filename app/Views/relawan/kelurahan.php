@@ -152,6 +152,81 @@
     </div>
 </div>
 
+<div id="detail" class="modal fade" data-bs-backdrop="static" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-scroll="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Detail Relawan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="<?= site_url('relawan/edit')?>" method="post" id="editform">
+                <input type="hidden" name="idrelawan" id="idrelawan2">
+    <div class="row">
+        <div class="col-6">
+            <div class="mb-3">
+                <label for="nik" class="form-label">NIK</label>
+                <input type="text" class="form-control" name="nik" id="nik2" disabled>
+            </div>
+        </div><!--end col-->
+        <div class="col-6">
+            <div class="mb-3">
+                <label for="nkk" class="form-label">No. KK</label>
+                <input type="text" class="form-control" name="nkk" id="nkk2" disabled>
+            </div>
+        </div><!--end col-->
+        <div class="col-12">
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama</label>
+                <input type="text" class="form-control" name="nama" id="nama2" disabled>
+            </div>
+        </div><!--end col-->
+        <div class="col-6">
+            <div class="mb-3">
+                <label for="no_hp2" class="form-label">No. HP</label>
+                <input type="tel" class="form-control" name="no_hp" id="no_hp2">
+            </div>
+        </div><!--end col-->
+        <div class="col-6">
+            <div class="mb-3">
+                <label for="jenis_kelamin2" class="form-label">Jenis Kelamin</label>
+                <select class="form-select" name="jenis_kelamin" id="jenis_kelamin2">
+                    <option value="Laki-Laki">Laki-Laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                  </select>
+            </div>
+        </div><!--end col-->
+        <div class="col-12">
+            <div class="mb-3">
+                <label for="alamat2" class="form-label">Alamat</label>
+                <input type="text" class="form-control" name="alamat" id="alamat2">
+            </div>
+        </div><!--end col-->
+        <div class="col-6">
+            <div class="mb-3">
+                <label for="kecamatan2" class="form-label">Kecamatan</label>
+                <input type="text" class="form-control" name="kecamatan" id="kecamatan2" disabled>
+            </div>
+        </div><!--end col-->
+        <div class="col-6">
+            <div class="mb-3">
+              <label for="kelurahan2" class="form-label">Kelurahan</label>
+              <input type="text" class="form-control" name="kelurahan" id="kelurahan2" disabled>
+            </div>
+        </div>
+    </div>
+</form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger waves-effect" onclick="hapusrelawan()">Hapus</button>
+                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary waves-effect" onclick="$('#editform').submit()">Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?= $this->endSection() ?>
 <?= $this->section('script') ?>
 <script src="<?= base_url()?>assets/js/jquery.form.js"></script>
@@ -191,8 +266,31 @@ function addKorkel(id)
 }
 
 function detail(id) {
-  $('#detailRelawan').load('<?= site_url('ajax/getrelawan')?>/'+id);
-  $('#detail').modal('show');
+
+  axios.get('<?= site_url() ?>ajax/searchrelawan/'+id)
+  .then(function (response) {
+    $('#idrelawan2').val(id);
+    $('#nik2').val(response.data.nik);
+    $('#nkk2').val(response.data.nkk);
+    $('#nama2').val(response.data.nama);
+    $('#kecamatan2').val(response.data.kecamatan);
+    $('#kelurahan2').val(response.data.kelurahan);
+    $('#rt2').val(response.data.rt);
+    $('#rw2').val(response.data.rw);
+    $('#jenis_kelamin2').val(response.data.jenis_kelamin);
+    $('#alamat2').val(response.data.alamat);
+    $('#no_hp2').val(response.data.no_hp);
+    $('#detail').modal('show');
+  });
+}
+
+function hapusrelawan() {
+  var id = $('#idrelawan2').val();
+
+  let text = "Data akan dihapus?";
+  if (confirm(text) == true) {
+    window.location.replace("<?= site_url('relawan/delete')?>/"+id);
+  }
 }
 </script>
 <?= $this->endSection() ?>

@@ -21,6 +21,18 @@ class Ajax extends BaseController
     }
   }
 
+  public function searchrelawan($id)
+  {
+    $model = new RelawanModel;
+    $get = $model->find($id);
+
+    if($get){
+      return $this->response->setJSON($get);
+    }else{
+      return $this->response->setJSON(['status'=>'fail']);
+    }
+  }
+
   public function detailRelawan($id)
   {
     $model = new RelawanModel;
